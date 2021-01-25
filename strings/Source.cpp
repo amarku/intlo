@@ -80,10 +80,14 @@ namespace chili
 
 int main()
 {
-	const int myInt = 6942069;
-	std::ofstream out("stuff.dat", std::ios::binary);
+	std::ifstream in("stuff.dat", std::ios::binary);
 
-	out.write(reinterpret_cast<const char*>(&myInt), sizeof(myInt));
+	int data;
+	in.read(reinterpret_cast<char*>(&data), sizeof(int));
+
+	char buffer[256];
+	chili::int2str(data, buffer, 256);
+	chili::print(buffer);
 
 	while( !_kbhit() );
 	return 0;
