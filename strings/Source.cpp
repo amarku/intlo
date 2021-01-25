@@ -80,17 +80,10 @@ namespace chili
 
 int main()
 {
-	const char data[] = "abc\n\n123";
-	std::ofstream out("crlf.txt", std::ios::binary);
+	const int myInt = 6942069;
+	std::ofstream out("stuff.dat", std::ios::binary);
 
-	for (char c : data)
-	{
-		if (c == 0)
-		{
-			break;
-		}
-		out.put(c);
-	}
+	out.write(reinterpret_cast<const char*>(&myInt), sizeof(myInt));
 
 	while( !_kbhit() );
 	return 0;
