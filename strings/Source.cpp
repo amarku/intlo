@@ -178,7 +178,7 @@ namespace chili
 	};
 }
 
-int main()
+void dodb()
 {
 	chili::Database db;
 	char buffer[256];
@@ -187,42 +187,46 @@ int main()
 
 	do
 	{
-		chili::print( "(l)oad (s)ave (a)dd (q)uit or (p)rint?" );
+		chili::print("(l)oad (s)ave (a)dd (q)uit or (p)rint?");
 		char response = _getch();
-		switch( response )
+		switch (response)
 		{
 		case 'l':
-			chili::print( "\nEnter file name: " );
-			chili::read( buffer,sizeof( buffer ) );
-			db.Load( buffer );
-			_putch( '\n' );
+			chili::print("\nEnter file name: ");
+			chili::read(buffer, sizeof(buffer));
+			db.Load(buffer);
+			_putch('\n');
 			break;
 		case 's':
-			chili::print( "\nEnter file name: " );
-			chili::read( buffer,sizeof( buffer ) );
-			db.Save( buffer );
-			_putch( '\n' );
+			chili::print("\nEnter file name: ");
+			chili::read(buffer, sizeof(buffer));
+			db.Save(buffer);
+			_putch('\n');
 			break;
 		case 'a':
-			chili::print( "\nEnter name: " );
-			chili::read( buffer,sizeof( buffer ) );
-			chili::print( "\nEnter value: " );
-			chili::read( buffer2,sizeof( buffer2 ) );
-			db.Add( buffer,chili::str2int( buffer2 ) );
-			_putch( '\n' );
+			chili::print("\nEnter name: ");
+			chili::read(buffer, sizeof(buffer));
+			chili::print("\nEnter value: ");
+			chili::read(buffer2, sizeof(buffer2));
+			db.Add(buffer, chili::str2int(buffer2));
+			_putch('\n');
 			break;
 		case 'p':
-			chili::print( "\n\n     Beautiful Chart Bitches!" );
-			chili::print( "\n     ------------------------\n\n" );
+			chili::print("\n\n     Beautiful Chart Bitches!");
+			chili::print("\n     ------------------------\n\n");
 			db.Print();
-			_putch( '\n' );
+			_putch('\n');
 			break;
 		case 'q':
 			quitting = true;
 			break;
 		}
-	}
-	while( !quitting );
+	} while (!quitting);
+}
+
+int main()
+{
+
 
 	return 0;
 }
