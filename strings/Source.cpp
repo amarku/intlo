@@ -225,57 +225,69 @@ void dodb()
 	} while (!quitting);
 }
 
+class SlaveA
+{
+public:
+	SlaveA()
+	{
+		chili::print("Constructing SlaveA\n");
+	}
+	~SlaveA()
+	{
+		chili::print("Destructing SlaveA\n");
+	}
+};
+
+class SlaveB
+{
+public:
+	SlaveB()
+	{
+		chili::print("Constructing SlaveB\n");
+	}
+	~SlaveB()
+	{
+		chili::print("Destructing SlaveB\n");
+	}
+};
+
+class SlaveC
+{
+public:
+	SlaveC() = default;
+	SlaveC(int x)
+	{
+		chili::print("Constructing SlaveC\n");
+	}
+	~SlaveC()
+	{
+		chili::print("Destructing SlaveC\n");
+	}
+};
+
+class Master
+{
+public:
+	Master() = default;
+	Master(int x) : x(x), c(5)
+	{}
+	~Master()
+	{
+		chili::print("Destructing Master\n");
+	}
+private:
+	SlaveA a;
+	SlaveB b;
+	SlaveC c;
+	int x;
+};
+
 int main()
 {
-	char buffer[256];
-	chili::print("\nEnter file name: ");
-	chili::read(buffer, sizeof(buffer));
-	std::ifstream warp_file("warp.txt");
-	
-	warp_file.seekg(0, std::ios_base::end);
-	const int file_size = warp_file.tellg();
-	warp_file.seekg(0, std::ios_base::beg);
-	char* warp_string = new char[(long long)file_size+1];
-
-	// read file into array
-	int i = 0;
-	for (char c = warp_file.get(); warp_file.good(); c = warp_file.get())
 	{
-		warp_string[i++] = c;
-	} 
-	warp_string[i] = 0;
-
-	// repeatedly display random snippets until user quits
-	const int snippet_size = 400;
-	std::minstd_rand rng(std::random_device{}());
-	std::uniform_int_distribution<int> dist(0, i - snippet_size);
-	bool quitting = false;
-
-	do
-	{
-		chili::print("\n(r)ead a snippet or (q)uit?");
-		switch (_getch())
-		{
-		case 'r':
-			{
-				_putch('\n');
-				_putch('\n');
-				const int iStart = dist(rng);
-				for (int i = iStart; i < iStart + snippet_size; i++)
-				{
-					_putch(warp_string[i]);
-				}
-				_putch('\n');
-				break;
-			}
-			case 'q':
-				quitting = true;
-				break;
-		}
-	} while (!quitting);
-
-	delete[] warp_string;
-
-
+		Master m(2);
+		Master n(m);
+	}
+	while (!_kbhit());
 	return 0;
 }
